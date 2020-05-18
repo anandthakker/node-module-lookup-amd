@@ -52,7 +52,7 @@ module.exports = function(options) {
 
   let resolutionDirectory;
 
-  if (configPath) {
+  if (configPath && depPath[0] !== '.') {
     resolutionDirectory = configPath;
     debug('module resolution directory (based on configPath): ' + resolutionDirectory);
 
@@ -65,7 +65,7 @@ module.exports = function(options) {
     debug('module resolution directory (based on filename): ' + resolutionDirectory);
   }
 
-  if (config.baseUrl[0] === '/') {
+  if (config.baseUrl[0] === '/' && depPath[0] !== '.') {
     debug('baseUrl with a leading slash detected');
     resolutionDirectory = resolutionDirectory.replace(config.baseUrl, '');
     debug('new resolution directory: ' + resolutionDirectory);
@@ -75,7 +75,7 @@ module.exports = function(options) {
 
   depPath = stripLoader(depPath);
 
-  let normalizedModuleId = requirejs.toUrl(depPath);
+  let normalizedModuleId = depPath[0] !== '.' ? requirejs.toUrl(depPath) : depPath;
   debug('requirejs normalized module id: ' + normalizedModuleId);
 
   if (normalizedModuleId.includes('...')) {
