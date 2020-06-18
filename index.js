@@ -110,7 +110,7 @@ module.exports = function(options) {
 function findFileLike(fileSystem, partial, resolved) {
   const fileDir = path.dirname(resolved);
 
-  const pattern = escapeRegExp(resolved + '.');
+  const pattern = escapeRegExp(resolved + '.js');
 
   debug('looking for file like ' + pattern);
   debug('within ' + fileDir);
